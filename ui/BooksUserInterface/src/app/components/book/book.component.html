@@ -1,0 +1,84 @@
+<mat-dialog-content>
+    <div class="container">
+      <h2 style="text-align: center; margin-top: 20px" *ngIf="this?.book.id">
+        Muokkaa Kirjaa
+      </h2>
+      <h2 style="text-align: center" *ngIf="!this?.book.id">
+        Lisää Kirja
+      </h2>
+      <button
+        mat-button
+        (click)="close()"
+        style="
+          font-size: 2em;
+          color: lightgray;
+          margin-right: -20px;
+          float: right;
+          margin-top: -50px;
+        "
+        tabIndex="-1"
+        aria-label="Dialogi sulku nappi"
+      >
+        &#215;
+      </button>
+
+  
+      <mat-form-field appearance="standard">
+        <mat-label>Kirja nimi</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="book.title"
+          style="width: 80%;"
+          class="form-control"
+          placeholder="Kirjan nimi"
+          value="{{ book?.title }}"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Kirjan arvo</mat-label>
+        <input
+          matInput
+          type="text"
+          style="width: 80%;"
+          [(ngModel)]="book.price"
+          class="form-control"
+          placeholder="Kirjan arvo"
+          value="{{ book?.price }}"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Kirjan arvosana</mat-label>
+        <input
+          matInput
+          type="number"
+          style="width: 80%;"
+          [(ngModel)]="book.score"
+          class="form-control"
+          placeholder="Kirjan arvosana"
+          value="{{ book?.score }}"
+          min="0" max="5"
+        />
+       
+      </mat-form-field>
+  
+      <p>Valitse julkaisu päivämäärä</p>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Valitse pvm</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="book.released"
+          [value]="book.released"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="saveBook()">Tallenna</button>
+    <button mat-button (click)="close()">Peruuta</button>
+    <button mat-button (click)="deleteBook()" style="color:red;" *ngIf="this?.book.id" (click)="delete()">Poista</button>
+  </mat-dialog-actions>

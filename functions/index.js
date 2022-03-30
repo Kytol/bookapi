@@ -19,6 +19,7 @@ app.post("/api/create", (req, res) => {
       try {
         const bookId = Math.floor(Math.random() * 99999999999999999999);
         req.body.id = bookId
+        req.body.book.id = bookId
         await db.collection("books").doc("/" + bookId + "/")            .create(req.body.book);
         return res.status(200).send({"status": "successfully created ", bookId } );
       } catch (error) {
@@ -43,29 +44,30 @@ app.get("/api/read/:book_id", (req, res) => {
     })();
   });
   
-  app.get("/api/read", (req, res) => {
-    (async () => {
-      try {
-        const query = db.collection("books");
-        const response = [];
-        await query.get().then((querySnapshot) => {
-          const docs = querySnapshot.docs;
-          for (const doc of docs) {
-            const selectedItem = {
-              id: doc.id,
-              book: doc.data(),
-            };
-            response.push(selectedItem);
-          }
-          return response;
-        });
-        return res.status(200).send({"status": "successfully got books"});
-      } catch (error) {
-        console.log(error);
-        return res.status(500).send(error);
-      }
-    })();
-  });
+// read all
+app.get("/api/read", (req, res) => {
+  (async () => {
+    try {
+      const query = db.collection("books");
+      const response = [];
+      await query.get().then((querySnapshot) => {
+        const docs = querySnapshot.docs;
+        for (const doc of docs) {
+          const selectedItem = {
+            id: doc.id,
+            book: doc.data(),
+          };
+          response.push(selectedItem);
+        }
+        return response;
+      });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
 
 // update
 app.put("/api/update/:book_id", (req, res) => {

@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.mat-form-field {
+    display: inline !important;
+  }
+  
+  .mat-row:hover {
+    background-color: rgba(195, 195, 195, 0.178);
+    cursor: pointer;
+  }
+
+  .successToast {
+    background: #2196f3;
+    color: white;
+    white-space: pre-line;
+  }
+  .errorToast {
+    background: #f44336;
+    color: white;
+    white-space: pre-line;
+  }
